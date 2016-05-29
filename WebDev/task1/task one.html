@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+     <title>Countdown timer</title>
+       <style>
+          html { 
+                 background:url(https://images3.alphacoders.com/245/245539.jpg) no-repeat center center fixed; 
+                 -webkit-background-size: cover;
+                 -moz-background-size: cover;
+                 -o-background-size: cover;
+                 background-size: cover;
+				 }
+          body{
+            	text-align:center;
+				font-family: sans-serif;
+    			font-weight: 100;
+			  }
+		  input[type=text] {
+   				padding:5px; 
+    			border:2px solid #FF0; 
+				width:5em;
+				opacity:0.6;
+    			-webkit-border-radius: 5px;
+    			border-radius: 5px;
+			   }
+       		#getInput  :hover{
+			 	opacity:1.0;
+		       }
+		  input[type=text]:focus {
+    		    border-color:#060;
+    			width:5em;
+				opacity:1.0;
+				color:transparent #FFF;
+				background-color:transparent #CCC;
+				}	  
+	      #clockcontainer{
+				font-family: sans-serif;
+				color:#00F;
+				display: inline-block;
+				font-weight: 100;
+				text-align: center;
+				font-size: 30px;
+                   }
+
+		.timer_box{
+         		display: inline-block;
+      			width:65px;
+	  			height:50px;
+      			color:#00C;
+	  			margin:1px;
+      			padding: 10px;
+	  			border-radius: 3px;
+	  			background: #00BF96;
+	  			text-align:center;
+	 			background-color:#0C0; 
+				opacity:0.9;
+				filter: alpha(opacity=60);
+	     			}
+		#clockcontainer div:hover {
+			opacity:1.0;
+			filter: alpha(opacity=100);
+		}
+						
+		.topic{
+				text-align:center;
+				color:#FFF;
+				}
+			 
+		.timerNumber{text-align:center;
+   				}
+		.timerText{
+			    text-align:center;
+			    padding-top: 5px;
+				font-size: 16px;
+				color:#FFF;}	 
+		.span{
+				padding: 15px;
+				border-radius: 3px;
+				background:#9F0;
+            	display: inline-block;
+              }
+		button{
+				-moz-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+				-webkit-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+				box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+				background-color:#79bbff;
+				-moz-border-radius:6px;
+				-webkit-border-radius:6px;
+				border-radius:6px;
+				border:1px solid #84bbf3;
+				display:inline-block;
+				cursor:pointer;
+				color:#ffffff;
+				font-family:Arial;
+				font-size:15px;
+				font-weight:bold;
+				padding:6px 24px;
+				text-decoration:none;
+				text-shadow:0px 1px 0px #528ecc;
+				}
+	   button:hover {
+				background-color:#378de5;
+				}
+	   button:active {
+				position:relative;
+				top:1px;
+				}
+			
+		#getInput{
+			color:#FFF;
+		}		
+		
+     </style>
+  </head>
+  <body >
+     <br/>
+     <h1 id="heading" class="topic">CodeSprint Hackathon 2016</h1><!--topic class is for displaying the purpose of timer-->
+     <br/>
+     <h2 id="heading2" class="topic">Unleash your coding skills</h2>
+    <!-- <audio id="music" src="">-->
+     <h3 id="text"  class="topic"></h3><!--to display the date of the event and to declare the countdown is finished-->
+     <h3 class="topic">Time Left</h3>
+     <div id="clockcontainer">    <!--for containing the timer-->
+         	<div id="day" class="timer_box" > 
+         		<span id="dayNumber" class="timerNumber"></span>
+      			<div class="timerText">Days</div>
+	 		</div>
+			<div id="hour" class ="timer_box" >
+				<span id="hourNumber" class="timerNumber"></span>
+				<div class="timerText">Hours</div>
+			</div>
+			<div id="minute" class="timer_box" >
+				<span id="minuteNumber" class="timerNumber"></span>
+				<div class="timerText">Minutes</div>
+			</div>
+			<div id="second" class="timer_box" >
+				<span id="secondNumber" class="timerNumber"></span>
+				<div class="timerText">Seconds</div>
+			</div>
+	</div>
+	<br/>
+	<br/>
+	<br/>
+	<button onclick="start()" >START</button>  
+	<button onclick="stop()" >STOP</button>
+	<br/>
+    <br/>
+     
+    <div id="getInput"><!--to get input from user-->
+    
+    Day : <input id="inputDay" type="text"  value="dd" />
+    Month:<input id="inputMonth" type="text"  value="mm"/>
+    Year:<input id="inputYear" type="text"  value="yyyy"/>
+    <br/>
+    <br/>
+    Hour:<input id="inputHour" type="text"  value="hh"/>
+    Minute:<input id="inputMinute" type="text" value="mm"/>
+    Sec:<input id="inputSecond" type="text" value="ss"/>
+    </div>
+    <br/>
+    <button  onclick="time()" >RESET TIME</button> <!--clicking this changes timer to given date and time-->
+    <audio id="music"
+ <source src=""
+         type='audio/mp4'>
+</audio>
+	<script type="text/javascript">
+			var myvar,dh,dd,dm,ds;
+			var d=new Date();
+			var music = document.getElementById("music");
+			function start()
+				{
+					myvar=setInterval(function(){ arv() },1000);
+					document.getElementById("text").innerHTML="Hacking starts on "+d.toDateString();}
+        	function arv(){      //function to calculate the time left
+					var timenow= new Date();
+					var t=Date.parse(d)-Date.parse(timenow);
+		 			ds=Math.floor((t/1000)%60);
+	     			dm=Math.floor((t/1000/60)%60);
+		 			dh=Math.floor((t/(1000*60*60))%24);
+		 			dd=Math.floor(t/(1000*60*60*24));
+					document.getElementById("hourNumber").innerHTML=dh;
+					document.getElementById("dayNumber").innerHTML=dd;
+					document.getElementById("minuteNumber").innerHTML=dm;
+        			document.getElementById("secondNumber").innerHTML=ds;
+					if(dh<=0 && dd<=0 && dm<=0 && ds<=0)
+					{
+						  music.src="Equinox.mp3";
+                          music.play();
+						 document.getElementById("text").innerHTML="Coding has started";
+					document.getElementById("hourNumber").innerHTML="0";
+					document.getElementById("dayNumber").innerHTML="0";
+					document.getElementById("minuteNumber").innerHTML="0";
+        			document.getElementById("secondNumber").innerHTML="0"; 
+					clearInterval(myvar);	 
+					}
+					else{
+						
+						document.getElementById("text").innerHTML="Hacking starts on "+d.toDateString();
+					}
+							}
+			function stop(){   //function to stop the timer momentarily
+					clearInterval(myvar);
+					music.pause();
+							}
+	
+			function time()  //function to check whether the given input is valid and change the deadline
+			{
+                         var day  = document.getElementById("inputDay").value;
+						 var month= document.getElementById("inputMonth").value;
+			             var year= document.getElementById("inputYear").value;
+   				         var hour= document.getElementById("inputHour").value;
+						 var minute= document.getElementById("inputMinute").value;
+						 var sec= document.getElementById("inputSecond").value;
+						 if(day>0 && day<32 && month>0 && month<13 && year>2015 && year<9999 && hour>-1 && hour<13 && minute>-1 && minute<61 && sec>-1 && sec<61)
+						 {  
+							 d=new Date(year,month-1,day,hour,minute,sec);
+							 document.getElementById("text").innerHTML="Hacking starts on "+d.toDateString();       
+							 
+						 }
+						 else{
+							 alert("Enter date time is invalid");
+							 clearInterval(myvar);
+							}
+							music.pause();
+							document.getElementById("hourNumber").innerHTML="";
+							document.getElementById("dayNumber").innerHTML="";
+							document.getElementById("minuteNumber").innerHTML="";
+        					document.getElementById("secondNumber").innerHTML="";
+			
+			}
+	</script>
+  </body>
+</html>
