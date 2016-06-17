@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -22,8 +23,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         image=(ImageView)findViewById(R.id.imageView);
-
-
+        DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,12 +52,14 @@ public class MainActivity extends AppCompatActivity {
                     RecognizerIntent.EXTRA_RESULTS);
             String spokenText = results.get(0);
             r=(RelativeLayout)findViewById(R.id.R);
+            DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
             if(spokenText.equals("up"))  //if up  is spoken then this block is executed.
-            {
+            { float y=image.getHeight()/2;
+                int px = Math.round(y * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
 
-                     if(image.getY()-image.getHeight()/2<100)
-                     { float y=image.getHeight()/2;
-                         image.setY(y);
+                int px1 = Math.round(image.getY() * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+                     if(px1-px<100)
+                     {  ((ViewGroup.MarginLayoutParams) image.getLayoutParams()).topMargin =0;
                          Toast.makeText(MainActivity.this,"reached top", Toast.LENGTH_LONG).show();
                      }
                      else{    Toast.makeText(MainActivity.this,"up", Toast.LENGTH_LONG).show();
@@ -67,47 +69,55 @@ public class MainActivity extends AppCompatActivity {
             }
             else if(spokenText.equals("down"))
             {
-                if(r.getHeight()-image.getY()-image.getHeight()/2<100) {
-                float y=r.getHeight()-image.getHeight()/2;
-                image.setY(y);
+                int px = Math.round(r.getHeight() * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+                int px1 = Math.round(image.getHeight() * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+                int px2 = Math.round(image.getY() * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+               image.setMinimumHeight(px1);
+                if(px-px2-px1<100) {
+                    ((ViewGroup.MarginLayoutParams) image.getLayoutParams()).bottomMargin=0;
                 Toast.makeText(MainActivity.this, "reached bottom", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
                     Toast.makeText(MainActivity.this, "down", Toast.LENGTH_LONG).show();
-
                     ((ViewGroup.MarginLayoutParams) image.getLayoutParams()).topMargin += 100;
                     image.requestLayout();
                 }
             }
             else if(spokenText.equals("left"))
-            {     if(image.getX()-image.getWidth()/2<=100)
+            {    float x=image.getWidth()/2;
+
+            int px = Math.round(x * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+
+            int px1 = Math.round(image.getX() * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+            if(px1-px<100)
                  {
-                    float x;
-                    x=(image.getWidth()/2);
-                    image.setX(x);
+                     ((ViewGroup.MarginLayoutParams) image.getLayoutParams()).leftMargin = 0;
+                     image.requestLayout();
                     Toast.makeText(MainActivity.this, "reached left", Toast.LENGTH_LONG).show();
                  }
                 else {
                     Toast.makeText(MainActivity.this, "left", Toast.LENGTH_LONG).show();
-                    float x = image.getX();
-                    x = x - 100;
-                    image.setX(x);
+
+                ((ViewGroup.MarginLayoutParams) image.getLayoutParams()).leftMargin -= 100;
+                image.requestLayout();
                       }
             }
-            else if(spokenText.equals("right"))
-            {   if(r.getMeasuredWidth()-image.getX()-image.getWidth()<100)
+            else if(spokenText.equals("right")) {
+                int px = Math.round(r.getWidth() * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+                int px1 = Math.round(image.getWidth() * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+                int px2 = Math.round(image.getX() * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
                 {
-                    float x=r.getMeasuredWidth()-image.getWidth()/2;
-                    image.setX(x);
-                    Toast.makeText(MainActivity.this, "reached right", Toast.LENGTH_LONG).show();
-                }
-                else {
-                Toast.makeText(MainActivity.this, "right"+image.getX(), Toast.LENGTH_LONG).show();
-                float x = image.getX();
-                x = x + 100;
-                image.setX(x);
+                    if (px - px2 - px1/2 < 100) {
+                        ((ViewGroup.MarginLayoutParams) image.getLayoutParams()).rightMargin = 0;
+                        image.requestLayout();
+                        Toast.makeText(MainActivity.this, "reached right", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "right", Toast.LENGTH_LONG).show();
+                        ((ViewGroup.MarginLayoutParams) image.getLayoutParams()).leftMargin += 100;
+                        image.requestLayout();
                     }
+                }
             }
             else if(spokenText.equals("rectangle"))   //to change the shape to rectangle .
             {

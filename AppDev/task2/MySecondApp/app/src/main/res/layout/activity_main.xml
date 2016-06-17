@@ -16,7 +16,8 @@
         android:src="@mipmap/blackcircle"
         android:id="@+id/imageView"
         android:adjustViewBounds="false"
+        android:layout_marginTop="144dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="68dp" />
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="68dp" />
 </RelativeLayout>
