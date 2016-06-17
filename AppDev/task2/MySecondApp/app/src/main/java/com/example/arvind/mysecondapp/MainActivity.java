@@ -54,12 +54,13 @@ public class MainActivity extends AppCompatActivity {
             r=(RelativeLayout)findViewById(R.id.R);
             DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
             if(spokenText.equals("up"))  //if up  is spoken then this block is executed.
-            { float y=image.getHeight()/2;
+            { float y=image.getHeight();
                 int px = Math.round(y * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
 
                 int px1 = Math.round(image.getY() * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
                      if(px1-px<100)
                      {  ((ViewGroup.MarginLayoutParams) image.getLayoutParams()).topMargin =0;
+                         image.requestLayout();
                          Toast.makeText(MainActivity.this,"reached top", Toast.LENGTH_LONG).show();
                      }
                      else{    Toast.makeText(MainActivity.this,"up", Toast.LENGTH_LONG).show();
@@ -108,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 int px1 = Math.round(image.getWidth() * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
                 int px2 = Math.round(image.getX() * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
                 {
-                    if (px - px2 - px1/2 < 100) {
+                    if (px - px2 - px1 < 100) {
                         ((ViewGroup.MarginLayoutParams) image.getLayoutParams()).rightMargin = 0;
                         image.requestLayout();
                         Toast.makeText(MainActivity.this, "reached right", Toast.LENGTH_LONG).show();
