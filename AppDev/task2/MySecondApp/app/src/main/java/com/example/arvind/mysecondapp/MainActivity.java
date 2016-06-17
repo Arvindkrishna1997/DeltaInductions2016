@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-// Start the activity, the intent will be populated with the speech text
+// Start the activity, the intent will be populated with the speech text.
             startActivityForResult(intent, SPEECH_REQUEST_CODE);
         }
 
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 int px1 = Math.round(image.getWidth() * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
                 int px2 = Math.round(image.getX() * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
                 {
-                    if (px - px2 - px1 < 100) {
+                    if (px - px2 - px1/2 < 100) {
                         ((ViewGroup.MarginLayoutParams) image.getLayoutParams()).rightMargin = 0;
                         image.requestLayout();
                         Toast.makeText(MainActivity.this, "reached right", Toast.LENGTH_LONG).show();
